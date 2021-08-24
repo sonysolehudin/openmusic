@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable spaced-comment */
 /* eslint-disable lines-between-class-members */
-/* eslint-disable linebreak-style */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable linebreak-style */
 /* eslint-disable indent */
 /* eslint-disable eol-last */
 
@@ -21,7 +20,7 @@ class PlaylistsService {
         this._cacheService = cacheService;
     }
 
-    async addPlaylist({ Id, name, owner }) {
+    async addPlaylist({ name, owner }) {
         const id = `playlist-${nanoid(16)}`;
         const query = {
             text: 'INSERT INTO playlists VALUES($1, $2, $3) RETURNING id',
@@ -31,7 +30,7 @@ class PlaylistsService {
         if (!result.rows[0].id) {
             throw new InvariantError('Playlist gagal ditambahkan');
         }
-        await this._cacheService.delete(`playlists:${owner}-${Id}`);
+        //await this._cacheService.delete(`playlists:${owner}-${Id}`);
         return result.rows[0].id;
     }
 
@@ -101,7 +100,7 @@ class PlaylistsService {
             };
             const result = await this._pool.query(query);
             const mappedResult = result.rows.map(mapDBToModelPlaylists);
-            await this._cacheService.set(`playlists:${Id}`, JSON.stringify(mappedResult));
+            //await this._cacheService.set(`playlists:${Id}`, JSON.stringify(mappedResult));
             return mappedResult;
         }
     }
@@ -144,7 +143,7 @@ class PlaylistsService {
         if (!result.rows.length) {
             throw new NotFoundError('Playlist gagal dihapus. Id tidak ditemukan');
         }
-        await this._cacheService.delete(`playlists:${id}`);
+        //await this._cacheService.delete(`playlists:${id}`);
     }
 }
 module.exports = PlaylistsService;
