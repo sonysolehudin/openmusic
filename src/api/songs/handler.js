@@ -51,7 +51,7 @@ class SongsHandler {
                 status: 'error',
                 message: 'Maaf, terjadsi kegagalan pada server kami.',
             });
-            response.code(300);
+            response.code(500);
             console.error(error);
             return response;
         }
